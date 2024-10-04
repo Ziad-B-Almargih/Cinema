@@ -30,7 +30,7 @@ class HallController extends Controller
 
     public function update(UpdateHallRequest $request, Hall $hall)
     {
-        if($hall->movies()->count()){
+        if($hall->movies()->whereDate('showing_date', '>=', now())->count()){
             return back()->with('error', 'You Can not update this Hall');
         }
         $hall->update($request->validated());
@@ -38,7 +38,7 @@ class HallController extends Controller
     }
     public function destroy(Hall $hall)
     {
-        if($hall->movies()->count()){
+        if($hall->movies()->whereDate('showing_date', '>=', now())->count()){
             return back()->with('error', 'You Can not delete this Hall');
         }
         $hall->delete();

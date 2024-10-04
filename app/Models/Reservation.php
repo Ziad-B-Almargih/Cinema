@@ -8,9 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+
+/**
+ * Class Reservation
+ *
+ * @property int $id                    // The primary key (auto-incrementing ID)
+ * @property int $user_id               // Foreign key to the user who made the reservation
+ * @property int $movie_id              // Foreign key to the movie associated with the reservation
+ * @property int $standard_seats        // Number of standard seats reserved
+ * @property int $vip_seats             // Number of VIP seats reserved
+ * @property-read Movie $movie      // The movie associated with the reservation
+ * @property-read User $user        // The user who made the reservation
+ * @property-read Consumable[] $consumables // Consumables associated with the reservation
+ * @property float $totalPrice          // The total price for the reservation, including seats and consumables
+ */
 class Reservation extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'user_id',

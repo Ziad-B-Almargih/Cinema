@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('movie_id')->constrained('movies')->cascadeOnDelete();
             $table->unsignedSmallInteger('standard_seats');
             $table->unsignedSmallInteger('vip_seats');

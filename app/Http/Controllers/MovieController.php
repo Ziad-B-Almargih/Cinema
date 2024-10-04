@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ConsumableType;
 use App\Enums\MovieType;
+use App\Enums\Role;
 use App\Http\Requests\Movie\StoreMovieRequest;
 use App\Http\Requests\Movie\UpdateMovieRequest;
 use App\Models\Actor;
@@ -12,7 +13,7 @@ use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Trailer;
 use App\Services\MediaServices;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
@@ -24,6 +25,9 @@ class MovieController extends Controller
             'movies',
             Movie::select(['id', 'name', 'thumbnail', 'showing_date', 'start_time', 'end_time','type'])
                 ->where('name', 'like', $search)
+                ->when(Auth::user()->role === Role::USER, function ($q){
+                    $q->where('showing_date', '>=', now());
+                })
                 ->paginate()
         );
     }
