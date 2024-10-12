@@ -43,6 +43,11 @@ class ReservationController extends Controller
                 ], $consumables)
             );
         }
+        if($reservation->total_price > Auth::user()->balance){
+            $reservation->delete();
+            return back()->with('error', 'You do not have enough balance');
+        }
+        Auth::user()->decrement('balance', $reservation->total_price);
         return back()->with('success', 'Reservation created successfully');
     }
 

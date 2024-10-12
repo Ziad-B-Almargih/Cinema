@@ -33,6 +33,11 @@
                 </div>
             </div>
 
+            @if(Auth::user()->role === Role::USER)
+            <div class="inline-flex px-3 py-3 border border-transparent text-lg font-medium dark:text-gray-400 bg-white dark:bg-gray-800">
+                Your Balance: {{ Auth::user()->balance }} $
+            </div>
+            @endif
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">

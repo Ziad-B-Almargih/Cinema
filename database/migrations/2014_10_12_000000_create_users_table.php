@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->enum('role', Role::values())->default(Role::USER);
+            $table->float('balance')->nullable();
             $table->timestamps();
         });
     }

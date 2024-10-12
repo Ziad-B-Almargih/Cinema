@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read Movie $movie      // The movie associated with the reservation
  * @property-read User $user        // The user who made the reservation
  * @property-read Consumable[] $consumables // Consumables associated with the reservation
- * @property float $totalPrice          // The total price for the reservation, including seats and consumables
+ * @property float $total_price          // The total price for the reservation, including seats and consumables
  */
 class Reservation extends Model
 {

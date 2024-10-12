@@ -103,7 +103,7 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        if($movie->reservations()->count())
+        if($movie->reservations()->count() > 0)
             return redirect()->back()->with('error', "Can't Edit this movie");
         return view('movies.edit')->with([
             'movie' => $movie,
