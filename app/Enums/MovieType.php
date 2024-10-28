@@ -11,14 +11,14 @@ enum MovieType: string
     case COMEDY = 'comedy';
     case DRAMA = 'drama';
     case HORROR = 'horror';
-    case THRILLER = 'thriller';
-    case ROMANCE = 'romance';
-    case FANTASY = 'fantasy';
-    case ANIMATION = 'animation';
-    case DOCUMENTARY = 'documentary';
-    case ADVENTURE = 'adventure';
-    case MYSTERY = 'mystery';
-    case CRIME = 'crime';
-    case BIOGRAPHY = 'biography';
-    case FAMILY = 'family';
+//    case THRILLER = 'thriller';
+//    case ROMANCE = 'romance';
+//    case FANTASY = 'fantasy';
+//    case ANIMATION = 'animation';
+//    case DOCUMENTARY = 'documentary';
+//    case ADVENTURE = 'adventure';
+//    case MYSTERY = 'mystery';
+//    case CRIME = 'crime';
+//    case BIOGRAPHY = 'biography';
+//    case FAMILY = 'family';
 }

@@ -21,15 +21,18 @@ class MovieController extends Controller
     public function index()
     {
         $search = '%'.request()->input('search').'%';
-        return view('movies.index')->with(
-            'movies',
-            Movie::select(['id', 'name', 'thumbnail', 'showing_date', 'start_time', 'end_time','type'])
+        $types = MovieType::values();
+        $data = [];
+        foreach ($types as $type) {
+            $data[$type] = Movie::select(['id', 'name', 'thumbnail', 'showing_date', 'start_time', 'end_time','type'])
                 ->where('name', 'like', $search)
+                ->where('type', $type)
                 ->when(Auth::user()->role === Role::USER, function ($q){
                     $q->where('showing_date', '>=', now());
                 })
-                ->paginate()
-        );
+                ->paginate();
+        }
+        return view('movies.index')->with('data', $data);
     }
 
     public function create()
@@ -103,8 +106,6 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        if($movie->reservations()->count() > 0)
-            return redirect()->back()->with('error', "Can't Edit this movie");
         return view('movies.edit')->with([
             'movie' => $movie,
             'types' => MovieType::values(),
@@ -117,19 +118,15 @@ class MovieController extends Controller
      */
     public function update(UpdateMovieRequest $request, Movie $movie)
     {
-
-        if ($movie->reservations()->count() > 0) {
-            return redirect()->back()->with('error', "Can't update this movie because it has reservations.");
-        }
-
         $data = $request->validated();
-
         if(
             Movie::where('hall_id', $data['hall_id'])
-                ->whereNot('id', $movie->id)
+                ->where('id', '!=', $movie->id)
                 ->whereDate('showing_date',  $data['showing_date'])
-                ->whereBetween('start_time', [$data['start_time'], $data['end_time']])
-                ->orWhereBetween('end_time', [$data['start_time'], $data['end_time']])
+                ->where(function ($query) use ($data){
+                    $query->whereBetween('start_time', [$data['start_time'], $data['end_time']])
+                    ->orWhereBetween('end_time', [$data['start_time'], $data['end_time']]);
+                })
                 ->exists()
         ){
             return redirect()->route('movies.create')->with('error', 'There conflict in time');
@@ -147,6 +144,17 @@ class MovieController extends Controller
 
         $data['thumbnail'] = $request->file('thumbnail') ? MediaServices::update($data['thumbnail'], 'image', $movie->thumbnail, 'Movies') : $movie->thumbnail;
 
+        if ($movie->reservations()->count() > 0) {
+            if(
+                $data['start_time'] != $movie->start_time ||
+                $data['end_time'] != $movie->end_time ||
+                $data['hall_id'] != $movie->hall_id ||
+                $data['showing_date'] != $movie->showing_date ||
+                $data['standard_price'] != $movie->standard_price ||
+                $data['vip_price'] != $movie->vip_price
+            )
+            return redirect()->back()->with('error', "Can't update schedule information of this movie because it has reservations.");
+        }
         $movie->update($data);
 
         $movie->actors()->delete();

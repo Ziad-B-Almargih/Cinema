@@ -38,7 +38,7 @@ class HallController extends Controller
     }
     public function destroy(Hall $hall)
     {
-        if($hall->movies()->whereDate('showing_date', '>=', now())->count()){
+        if($hall->movies()->whereDate('showing_date', '>=', now())->count())
             return back()->with('error', 'You Can not delete this Hall');
         }
         $hall->delete();

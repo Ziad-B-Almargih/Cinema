@@ -32,6 +32,16 @@
                 @endif
             </div>
 
+            @foreach($data as $type => $movies)
+            <div class="font-semibold flex items-center justify-center text-2xl dark:text-gray-200 leading-tight">
+                {{ ucfirst($type) }}
+            </div>
+
+            @if(! count($movies))
+                <div class="font-semibold flex items-center justify-center w-full text-xl dark:text-red-600 leading-tight">
+                    No Movies!
+                </div>
+            @endif
             <!-- Movie Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach($movies as $movie)
@@ -65,6 +75,7 @@
             <div class="mt-6">
                 {{ $movies->links() }}
             </div>
+            @endforeach
         </div>
     </div>
 </x-app-layout>
