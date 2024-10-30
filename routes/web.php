@@ -29,13 +29,13 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::resource('halls', HallController::class);
+    Route::resource('consumables', ConsumableController::class);
+    Route::resource('movies', MovieController::class);
+    Route::resource('reservations', ReservationController::class);
+    Route::get('/reservations/{reservation}/download', [ReservationController::class, 'downloadImage'])->name('reservations.download');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('halls', HallController::class);
-Route::resource('consumables', ConsumableController::class);
-Route::resource('movies', MovieController::class);
-Route::resource('reservations', ReservationController::class);
-Route::get('/reservations/{reservation}/download', [ReservationController::class, 'downloadImage'])->name('reservations.download');
 
 require __DIR__.'/auth.php';
