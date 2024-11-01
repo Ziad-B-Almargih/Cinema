@@ -18,12 +18,12 @@
                         <div class="flex space-x-4">
                             <div class="w-1/2">
                                 <x-input-label for="name" :value="__('Movie Name')" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" required autofocus />
+                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" required autofocus value="{{  old('name') }}"/>
                                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
                             </div>
                             <div class="w-1/2">
                                 <x-input-label for="description" :value="__('Description')" />
-                                <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required></textarea>
+                                <textarea id="description" name="description"   class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required>{{old('description')}}</textarea>
                                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
                             </div>
                         </div>
@@ -32,12 +32,12 @@
                         <div class="flex space-x-4 mt-4">
                             <div class="w-1/2">
                                 <x-input-label for="thumbnail" :value="__('Thumbnail')" />
-                                <input id="thumbnail" name="thumbnail" type="file" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
+                                <input id="thumbnail" name="thumbnail"  value="{{  old('thumbnail') }}" type="file" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('thumbnail')" />
                             </div>
                             <div class="w-1/2">
                                 <x-input-label for="showing_date" :value="__('Showing Date')" />
-                                <x-text-input id="showing_date" name="showing_date" type="date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
+                                <x-text-input id="showing_date" name="showing_date"   value="{{  old('showing_date') }}" type="date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('showing_date')" />
                             </div>
                         </div>
@@ -45,12 +45,12 @@
                         <div class="flex space-x-4 mt-4">
                             <div class="w-1/2">
                                 <x-input-label for="start_time" :value="__('Start Time')" />
-                                <input id="start_time" name="start_time" type="time" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
+                                <input id="start_time" name="start_time"  value="{{  old('start_time') }}" type="time" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('start_time')" />
                             </div>
                             <div class="w-1/2">
                                 <x-input-label for="end_time" :value="__('End Time')" />
-                                <x-text-input id="end_time" name="end_time" type="time" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
+                                <x-text-input id="end_time" name="end_time"  value="{{  old('end_time') }}" type="time" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('end_time')" />
                             </div>
                         </div>
@@ -59,12 +59,12 @@
                         <div class="flex space-x-4 mt-4">
                             <div class="w-1/2">
                                 <x-input-label for="standard_price" :value="__('Standard Price')" />
-                                <x-text-input id="standard_price" name="standard_price" type="number" min="1" class="mt-1 block w-full" required />
+                                <x-text-input id="standard_price" name="standard_price"  value="{{  old('standard_price') }}" type="number" min="1" class="mt-1 block w-full" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('standard_price')" />
                             </div>
                             <div class="w-1/2">
                                 <x-input-label for="vip_price" :value="__('VIP Price')" />
-                                <x-text-input id="vip_price" name="vip_price" type="number" min="1" class="mt-1 block w-full" required />
+                                <x-text-input id="vip_price" name="vip_price"  value="{{  old('vip_price') }}" type="number" min="1" class="mt-1 block w-full" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('vip_price')" />
                             </div>
                         </div>
@@ -75,27 +75,39 @@
                                 <x-input-label for="hall_id" :value="__('Hall')" />
                                 <select id="hall_id" name="hall_id" class="mt-1 inline w-full dark:bg-gray-700 text-gray-300" required>
                                     @foreach($halls as $hall)
-                                        <option value="{{ $hall->id }}">{{ $hall->name }}</option>
+                                        <option value="{{ $hall->id }}" {{ old('hall_id') == $hall->id ? 'selected' : '' }}>
+                                            {{ $hall->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('hall_id')" />
                             </div>
+
                             <div class="w-1/2">
                                 <x-input-label for="type" :value="__('Movie Type')" />
                                 <select id="type" name="type" class="mt-1 inline w-full dark:bg-gray-700 text-gray-300" required>
                                     @foreach($types as $type)
-                                        <option value="{{ $type }}">{{ $type }}</option>
+                                        <option value="{{ $type }}" {{ old('type') == $type ? 'selected' : '' }}>
+                                            {{ $type }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('type')" />
                             </div>
+
                         </div>
 
                         <!-- Actors -->
                         <div class="mt-4">
                             <x-input-label for="actors" :value="__('Actors (Optional)')" />
                             <div id="actors-wrapper">
-
+                                @php(logger(old('actors')))
+                                @foreach(old('actors', []) as $actor)
+                                    <div class="actor-group mb-2 flex space-x-4">
+                                        <x-text-input type="text" name="actors[]" class="mt-1 block w-full" placeholder="Actor name" value="{{ $actor }}"/>
+                                        <button type="button" class="remove-actor text-red-500">Remove</button>
+                                    </div>
+                                @endforeach
                             </div>
                             <button type="button" id="add-actor" class="mt-2 text-blue-500">+ Add Actor</button>
                         </div>

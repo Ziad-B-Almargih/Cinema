@@ -55,9 +55,12 @@ class MovieController extends Controller
                     ->orWhereBetween('end_time', [$data['start_time'], $data['end_time']])
                     ->exists()
             ){
-                return redirect()->route('movies.create')->with('error', 'There conflict in time');
+                return redirect()->route('movies.create')
+                    ->withInput()
+                    ->with('error', 'There conflict in time');
             }
 
+            Movie::created();
 
             if(isset($data['actors'])){
                 $actors = $data['actors'];

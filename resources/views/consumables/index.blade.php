@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Consumables
+            Food & Drink
         </h2>
     </x-slot>
     <div class="py-12">
@@ -96,7 +96,7 @@
                                     </div>
 
                                     <div class="mt-4">
-                                        <x-input-label for="price" :value="__('Standard Seats')" />
+                                        <x-input-label for="price" :value="__('Price')" />
                                         <x-text-input id="price_m"  name="price" placeholder="Number" type="number" step="0.01" class="mt-1 block w-full" required />
                                     </div>
 

@@ -21,7 +21,7 @@
                             Halls <i class="fa-solid fa-hotel"></i>
                         </x-nav-link>
                         <x-nav-link :href="route('consumables.index')" :active="request()->routeIs('consumables.*')">
-                            Consumables <i class="fa-solid fa-utensils"></i>
+                            Food & Drink <i class="fa-solid fa-utensils"></i>
                         </x-nav-link>
                     @else
                         <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.*')">
