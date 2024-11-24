@@ -21,9 +21,7 @@ return new class extends Migration
             $table->float('standard_price');
             $table->float('vip_price');
             $table->enum('type', MovieType::values());
-            $table->date('showing_date');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->foreignId('schedule_id')->constrained('schedules');
             $table->timestamps();
         });
     }

@@ -36,22 +36,15 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('thumbnail')" />
                             </div>
                             <div class="w-1/2">
-                                <x-input-label for="showing_date" :value="__('Showing Date')" />
-                                <x-text-input id="showing_date" name="showing_date"   value="{{  old('showing_date') }}" type="date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('showing_date')" />
-                            </div>
-                        </div>
-                        <!-- Start time & End time -->
-                        <div class="flex space-x-4 mt-4">
-                            <div class="w-1/2">
-                                <x-input-label for="start_time" :value="__('Start Time')" />
-                                <input id="start_time" name="start_time"  value="{{  old('start_time') }}" type="time" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('start_time')" />
-                            </div>
-                            <div class="w-1/2">
-                                <x-input-label for="end_time" :value="__('End Time')" />
-                                <x-text-input id="end_time" name="end_time"  value="{{  old('end_time') }}" type="time" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('end_time')" />
+                                <x-input-label for="schedule_id" :value="__('Schedule')" />
+                                <select id="schedule_id" name="schedule_id" class="mt-1 inline w-full dark:bg-gray-700 text-gray-300" required>
+                                    @foreach($schedules as $schedule)
+                                        <option value="{{ $schedule->id }}" {{ old('schedule_id') == $schedule->id ? 'selected' : '' }}>
+                                            {{ $schedule->date }} from {{ $schedule->start_time }} to {{ $schedule->end_time }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('schedule_id')" />
                             </div>
                         </div>
 
@@ -97,21 +90,6 @@
 
                         </div>
 
-                        <!-- Actors -->
-                        <div class="mt-4">
-                            <x-input-label for="actors" :value="__('Actors (Optional)')" />
-                            <div id="actors-wrapper">
-                                @php(logger(old('actors')))
-                                @foreach(old('actors', []) as $actor)
-                                    <div class="actor-group mb-2 flex space-x-4">
-                                        <x-text-input type="text" name="actors[]" class="mt-1 block w-full" placeholder="Actor name" value="{{ $actor }}"/>
-                                        <button type="button" class="remove-actor text-red-500">Remove</button>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <button type="button" id="add-actor" class="mt-2 text-blue-500">+ Add Actor</button>
-                        </div>
-
                         <!-- Trailers -->
                         <div class="mt-4">
                             <x-input-label for="trailers" :value="__('Trailers (Optional)')" />
@@ -131,24 +109,8 @@
         </div>
     </div>
 
-    <!-- Scripts for Adding/Removing Actors and Trailers -->
+    <!-- Scripts for Adding/Removing Trailers -->
     <script>
-        document.getElementById('add-actor').addEventListener('click', function () {
-            let newActorGroup = document.createElement('div');
-            newActorGroup.classList.add('actor-group', 'mb-2', 'flex', 'space-x-4');
-            newActorGroup.innerHTML = `
-                <x-text-input type="text" name="actors[]" class="mt-1 block w-full" placeholder="Actor name" />
-                <button type="button" class="remove-actor text-red-500">Remove</button>
-            `;
-            document.getElementById('actors-wrapper').appendChild(newActorGroup);
-        });
-
-        document.getElementById('actors-wrapper').addEventListener('click', function (e) {
-            if (e.target.classList.contains('remove-actor')) {
-                e.target.closest('.actor-group').remove();
-            }
-        });
-
         document.getElementById('add-trailer').addEventListener('click', function () {
             let newTrailer = document.createElement('div');
             newTrailer.innerHTML = `
@@ -165,7 +127,6 @@
                 e.target.closest('.trailer-group').remove();
             }
         });
-
     </script>
 
 

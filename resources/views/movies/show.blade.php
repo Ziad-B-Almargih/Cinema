@@ -190,7 +190,7 @@
                     <div class="max-w-7xl flex space-x-4 mt-4">
                         <div class="w-1/2">
                             <p><strong>{{ __('Showing Date:') }}</strong>
-                                {{ $movie['showing_date'] }}
+                                {{ $movie['schedule']['date'] }}
                             </p>
                         </div>
                         <div class="w-1/2">
@@ -203,7 +203,7 @@
                             <path
                                 d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                             </svg>
-                            {{ \Carbon\Carbon::parse($movie['start_time'])->diff(\Carbon\Carbon::parse($movie['end_time']))->format('%H:%I') }}
+                            {{ \Carbon\Carbon::parse($movie['schedule']['start_time'])->diff(\Carbon\Carbon::parse($movie['schedule']['end_time']))->format('%H:%I') }}
                             hours
                             </span>
                             </p>
@@ -213,12 +213,12 @@
                     <div class="max-w-7xl flex space-x-4 mt-4">
                         <div class="w-1/2">
                             <p>
-                                <strong>{{ __('Start Time:') }}</strong> {{ Carbon::make($movie['start_time'])->format('h:i A') }}
+                                <strong>{{ __('Start Time:') }}</strong> {{ Carbon::make($movie['schedule']['start_time'])->format('h:i A') }}
                             </p>
                         </div>
                         <div class="w-1/2">
                             <p>
-                                <strong>{{ __('End Time:') }}</strong> {{ Carbon::make($movie['end_time'])->format('h:i A') }}
+                                <strong>{{ __('End Time:') }}</strong> {{ Carbon::make($movie['schedule']['end_time'])->format('h:i A') }}
                             </p>
                         </div>
                     </div>
@@ -243,17 +243,6 @@
                                 <p><strong>Empty Standard Seats: </strong> {{ $movie['empty_standard'] }}</p>
                                 <p><strong>Empty VIP Seats: </strong> {{ $movie['empty_vip'] }}</p>
                             </div>
-                            <!-- Actors -->
-                            @if (!empty($movie['actors']))
-                                <div class="w-1/2 mt-4">
-                                    <h4 class="text-2xl text-indigo-600 font-semibold mb-4">{{ __('Actors') }}</h4>
-                                    <ul class="list-disc ml-5">
-                                        @foreach ($movie['actors'] as $actor)
-                                            <li>{{ $actor['name'] }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
                         </div>
 
                         <!-- Trailers Slider -->

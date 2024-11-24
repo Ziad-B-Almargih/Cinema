@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\MovieType;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,7 +25,6 @@ use Illuminate\Support\Carbon;
  * @property Carbon $end_time     // The end time of the movie
  * @property-read Hall $hall              // The hall the movie is shown in
  * @property-read Reservation[] $reservations // Collection of reservations for the movie
- * @property-read Actor[] $actors // Collection of actors associated with the movie
  * @property-read Trailer[] $trailers // Collection of trailers for the movie
  * @property int $emptyStandard         // The number of available standard seats for this movie
  * @property int $emptyVIP              // The number of available VIP seats for this movie
@@ -41,9 +39,7 @@ class Movie extends Model
         'standard_price',
         'vip_price',
         'type',
-        'showing_date',
-        'start_time',
-        'end_time',
+        'schedule_id'
     ];
 
     protected $casts = [
@@ -60,6 +56,11 @@ class Movie extends Model
         return $this->belongsTo(Hall::class)->withTrashed();
     }
 
+    public function schedule(): BelongsTo
+    {
+        return $this->belongsTo(Schedule::class);
+    }
+
     /**
      * Get the reservations for the movie.
      *
@@ -68,16 +69,6 @@ class Movie extends Model
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
-    }
-
-    /**
-     * Get the actors associated with the movie.
-     *
-     * @return HasMany
-     */
-    public function actors(): HasMany
-    {
-        return $this->hasMany(Actor::class);
     }
 
     /**

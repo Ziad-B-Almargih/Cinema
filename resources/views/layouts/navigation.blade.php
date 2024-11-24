@@ -23,6 +23,10 @@
                         <x-nav-link :href="route('consumables.index')" :active="request()->routeIs('consumables.*')">
                             Food & Drink <i class="fa-solid fa-utensils"></i>
                         </x-nav-link>
+
+                        <x-nav-link :href="route('schedules.index')" :active="request()->routeIs('schedules.*')">
+                            Schedules <i class="fa-solid fa-utensils"></i>
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.*')">
                             Reservations <i class="fa-solid fa-ticket"></i>
@@ -88,6 +92,10 @@
 
                 <x-responsive-nav-link :href="route('consumables.index')" :active="request()->routeIs('consumables.*')">
                     {{ __('Consumables') }}<i class="fa-solid fa-utensils"></i>
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('schedules.index')" :active="request()->routeIs('schedules.*')">
+                    {{ __('Schedules') }}<i class="fa-solid fa-utensils"></i>
                 </x-responsive-nav-link>
             @else
 
