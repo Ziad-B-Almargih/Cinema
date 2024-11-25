@@ -110,7 +110,7 @@ class MovieController extends Controller
                 ->where('schedule_id', $data['schedule_id'])
                 ->exists()
         ){
-            return redirect()->route('movies.create')->with('error', 'There conflict in time');
+            return redirect()->back()->with('error', 'There conflict in time');
         }
         if(isset($data['trailers'])) {
             $trailers = $data['trailers'];

@@ -8,49 +8,45 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-messages/>
             <!-- Create New Schedule Form -->
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
-                    <section>
-                        <header>
-                            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                {{ __('Create new Schedule') }}
-                            </h2>
-                        </header>
+                    <div class="mb-4">
+                        <button onclick="openCreateModal()"
+                                class="bg-indigo-600 text-white hover:bg-indigo-500 px-4 py-2 rounded">
+                            {{ __('Create New Schedule') }}
+                        </button>
+                    </div>
+                </div>
 
-                        <form method="post" action="{{ route('schedules.store') }}" class="mt-6 space-y-6">
-                            @csrf
+            <div id="createModal"
+                 class="fixed inset-0 z-50 hidden flex items-center justify-center bg-gray-900 bg-opacity-75">
+                <div class="bg-gray-800 rounded-lg p-6 w-11/12 max-w-md">
+                    <h2 class="text-lg font-semibold text-gray-200">{{ __('Create New Schedule') }}</h2>
+                    <form method="post" action="{{ route('schedules.store') }}" class="mt-6 space-y-6">
+                        @csrf
 
-                            <div class="flex space-x-4">
-                                <div class="w-1/3">
-                                    <x-input-label for="start_time" :value="__('Start Time')"/>
-                                    <input id="start_time" name="start_time" value="{{  old('start_time') }}"
-                                           type="time"
-                                           class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm"
-                                           required/>
-                                </div>
+                        <div class="mt-4">
+                            <x-input-label for="start_time" :value="__('Start Time')"/>
+                            <input id="start_time" name="start_time" value="{{ old('start_time') }}" type="time"
+                                   class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required/>
+                        </div>
 
-                                <div class="w-1/3">
-                                    <x-input-label for="end_time" :value="__('End Time')"/>
-                                    <x-text-input id="end_time" name="end_time" value="{{  old('end_time') }}"
-                                                  type="time"
-                                                  class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm"
-                                                  required/>
-                                </div>
+                        <div class="mt-4">
+                            <x-input-label for="end_time" :value="__('End Time')"/>
+                            <x-text-input id="end_time" name="end_time" value="{{ old('end_time') }}" type="time"
+                                          class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required/>
+                        </div>
 
-                                <div class="w-1/3">
-                                    <x-input-label for="date" :value="__('Showing Date')"/>
-                                    <x-text-input id="date" name="date" value="{{  old('date') }}" type="date"
-                                                  class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm"
-                                                  required/>
-                                </div>
-                            </div>
+                        <div class="mt-4">
+                            <x-input-label for="date" :value="__('Showing Date')"/>
+                            <x-text-input id="date" name="date" value="{{ old('date') }}" type="date"
+                                          class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm" required/>
+                        </div>
 
-
-                            <div class="flex items-center gap-4">
-                                <x-primary-button>{{ __('Create') }}</x-primary-button>
-                            </div>
-                        </form>
-                    </section>
+                        <div class="mt-6 flex justify-end">
+                            <button type="button" class="mr-4 text-gray-400 hover:text-gray-300" onclick="closeCreateModal()">Cancel</button>
+                            <button type="submit" class="bg-indigo-600 text-white hover:bg-indigo-500 px-4 py-2 rounded">Create Schedule</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -165,5 +161,14 @@
         function closeModal() {
             document.getElementById('editModal').classList.add('hidden');
         }
+
+        function openCreateModal() {
+            document.getElementById('createModal').classList.remove('hidden');
+        }
+
+        function closeCreateModal() {
+            document.getElementById('createModal').classList.add('hidden');
+        }
+
     </script>
 </x-app-layout>
