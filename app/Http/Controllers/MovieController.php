@@ -123,12 +123,7 @@ class MovieController extends Controller
 
         if ($movie->reservations()->count() > 0) {
             if(
-                $data['start_time'] != $movie->start_time ||
-                $data['end_time'] != $movie->end_time ||
-                $data['hall_id'] != $movie->hall_id ||
-                $data['showing_date'] != $movie->showing_date ||
-                $data['standard_price'] != $movie->standard_price ||
-                $data['vip_price'] != $movie->vip_price
+                $data['schedule_id'] != $movie->schedule_id
             )
             return redirect()->back()->with('error', "Can't update schedule information of this movie because it has reservations.");
         }
