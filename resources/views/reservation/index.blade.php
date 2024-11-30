@@ -20,9 +20,9 @@
                             <h2 class="text-2xl my-2 font-bold  dark:text-indigo-400">
                                 <strong>{{ $reservation->movie->name }}</strong></h2>
                             <p class="my-2 text-sm font-bold dark:text-gray-200">Showing
-                                Date: {{ $reservation->movie->showing_date }}</p>
+                                Date: {{ $reservation->movie->schedule->showing_date }}</p>
                             <p class="my-2 text-sm font-bold dark:text-gray-200">
-                                Time: {{ \Carbon\Carbon::parse($reservation->movie->start_time)->format('h:i A') }}
+                                Time: {{ \Carbon\Carbon::parse($reservation->movie->schedule->start_time)->format('h:i A') }}
                             </p>
                             <span
                                 class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
@@ -31,7 +31,7 @@
                             <path
                                 d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                             </svg>
-                            {{ \Carbon\Carbon::parse($reservation->movie['start_time'])->diff(\Carbon\Carbon::parse($reservation->movie['end_time']))->format('%H:%I') }}
+                            {{ \Carbon\Carbon::parse($reservation->movie->schedule['start_time'])->diff(\Carbon\Carbon::parse($reservation->movie->schedule['end_time']))->format('%H:%I') }}
                             hours
                             </span>
                             <p class="my-2 text-sm dark:text-gray-400">Standard Seats: {{ $reservation->standard_seats }} - ({{ $reservation->movie->standard_price }}$)</p>

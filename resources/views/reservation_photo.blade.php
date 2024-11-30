@@ -29,9 +29,9 @@
 <div class="container">
     <div class="title">{{ $reservation->movie->name }}</div>
     <div class="content">
-        <p>Date: {{ $reservation->movie->showing_date }}</p>
-        <p>Time: {{ \Carbon\Carbon::parse($reservation->movie->start_time)->format('h:i A') }}</p>
-        <p>Period: {{ \Carbon\Carbon::parse($reservation->movie->start_time)->diff(\Carbon\Carbon::parse($reservation->movie->end_time))->format('%H:%I') }} hours</p>
+        <p>Date: {{ $reservation->movie->schedule->showing_date }}</p>
+        <p>Time: {{ \Carbon\Carbon::parse($reservation->movie->schedule->start_time)->format('h:i A') }}</p>
+        <p>Period: {{ \Carbon\Carbon::parse($reservation->movie->schedule->start_time)->diff(\Carbon\Carbon::parse($reservation->movie->schedule->end_time))->format('%H:%I') }} hours</p>
         <p>Standard Seats: {{ $reservation->standard_seats }} - {{ $reservation->movie->standard_price }}$</p>
         <p>VIP Seats: {{ $reservation->vip_seats }} - {{ $reservation->movie->vip_price }}$</p>
         <p>Hall: {{ $reservation->movie->hall->name }}</p>
