@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReservationRequest;
 use App\Models\Consumable;
+use App\Models\Payment;
 use App\Models\Reservation;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,10 @@ class ReservationController extends Controller
             return back()->with('error', 'You do not have enough balance');
         }
         Auth::user()->decrement('balance', $reservation->total_price);
+        Payment::create([
+           'user_id' => Auth::id(),
+           'amount'  => $reservation->total_price
+        ]);
         return back()->with('success', 'Reservation created successfully');
     }
 
